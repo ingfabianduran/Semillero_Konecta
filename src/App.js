@@ -16,7 +16,7 @@ function App() {
           container
           justifyContent='center'
           alignItems='center'
-          style={{ minHeight: '90vh', paddingBottom: '10px' }}>
+          style={{ minHeight: '90vh' }}>
           {/* <CircularProgress 
             size={60} /> */}
           <Routes />
