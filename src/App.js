@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Bar } from './components/Layout/Bar';
+import { Footer } from './components/Layout/Footer';
+import { Grid } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './themes/theme';
+import { CircularProgress } from '@mui/material';
+import { Routes } from './routes/Routes';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider
+      theme={theme}>
+      <div>
+        <Bar />
+        <Grid
+          container
+          justifyContent='center'
+          alignItems='center'
+          style={{ minHeight: '90vh', paddingBottom: '10px' }}>
+          {/* <CircularProgress 
+            size={60} /> */}
+          <Routes />
+        </Grid>
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
 
