@@ -15,7 +15,8 @@ function Footer() {
           fontWeight: 'bold', 
           fontSize: 12, 
           fontFamily: 'Roboto Condensed',
-          backgroundColor: '#eeeeee' }}>
+          backgroundColor: '#212121',
+          color: '#fafafa' }}>
         Grupo Konecta - 2022
       </Box>
     </Paper>
