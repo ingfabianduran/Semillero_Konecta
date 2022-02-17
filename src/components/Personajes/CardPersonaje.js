@@ -3,6 +3,7 @@ import { Card, CardMedia, CardContent, Typography, Stack, Chip } from '@mui/mate
 function CardPersonaje({ personaje }) {
   return (
     <Card
+      elevation={4}
       sx={{ maxWidth: 345 }}>
       <CardMedia
         component='img'
