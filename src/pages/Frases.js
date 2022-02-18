@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react';
 import { getData } from '../api/api';
 import { configAxios as axios } from '../api/axios';
 import _ from 'lodash';
-import { Grid } from '@mui/material';
-import { BoxFrase } from '../components/Frases/BoxFrase';
+import { Grid, CircularProgress } from '@mui/material';
+import { TableFrase } from '../components/Frases/TableFrase';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading } from '../store/Ui/actions';
 
 function Frases() {
   const [frases, setFrases] = useState([]);
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.loading);
 
   const estructurarData = async() => {
     const dataFrases = await getData('quotes');
@@ -18,6 +22,7 @@ function Frases() {
         foto: '',
         frases: listAgrupada[key].map(item => {
           return {
+            id: item.quote_id,
             frase: item.quote,
             comentarios: [],
             calificacion: ''
@@ -42,7 +47,7 @@ function Frases() {
       const foto = resPerfilPersonaje.filter(personaje => {
         if (personaje.data.length > 0) {
           return personaje.data[0].name === nombrePersonaje;
-        } 
+        }
       });
       if (foto.length > 0) item.foto = foto[0].data[0].img;
     });
@@ -50,8 +55,12 @@ function Frases() {
   };
 
   const loadData = async() => {
+    dispatch(setLoading(true));
     const dataFrases = await getProfilePersonaje();
-    setFrases(dataFrases)
+    setFrases(dataFrases);
+    setTimeout(() => {
+      dispatch(setLoading(false));
+    }, 1000);
   };
 
   useEffect(async() => {
@@ -61,13 +70,15 @@ function Frases() {
   return (
     <Grid
       container
-      spacing={3}>
+      spacing={3}
+      justifyContent='center'>
       {
-        frases.map(frase => (
-          <BoxFrase 
-            key={frase.personaje} 
-            frase={frase} />
-        ))
+        !loading ?
+          <TableFrase 
+          frases={frases} />
+        :
+          <CircularProgress 
+            size={60} />
       }
     </Grid>
   )
