@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ingfabianduran/Semillero_Konecta.git/static/css/main.43c86f1c.css",
+    "main.js": "/ingfabianduran/Semillero_Konecta.git/static/js/main.91fa70b5.js",
+    "static/js/787.02d310a2.chunk.js": "/ingfabianduran/Semillero_Konecta.git/static/js/787.02d310a2.chunk.js",
+    "index.html": "/ingfabianduran/Semillero_Konecta.git/index.html",
+    "main.43c86f1c.css.map": "/ingfabianduran/Semillero_Konecta.git/static/css/main.43c86f1c.css.map",
+    "main.91fa70b5.js.map": "/ingfabianduran/Semillero_Konecta.git/static/js/main.91fa70b5.js.map",
+    "787.02d310a2.chunk.js.map": "/ingfabianduran/Semillero_Konecta.git/static/js/787.02d310a2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.43c86f1c.css",
+    "static/js/main.91fa70b5.js"
+  ]
+}
