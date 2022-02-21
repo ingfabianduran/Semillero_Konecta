@@ -4,7 +4,7 @@ import { Personajes } from '../pages/Personajes';
 
 function Routes() {
   const routes = [
-    { url: '/', elemento: <Frases /> },
+    { url: '/frases', elemento: <Frases /> },
     { url: '/personajes', elemento: <Personajes /> }
   ];
 
