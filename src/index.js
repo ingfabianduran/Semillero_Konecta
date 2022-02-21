@@ -11,7 +11,7 @@ const store = createStore(uiReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && wind
 
 ReactDOM.render(
   <BrowserRouter
-    basename='https://ingfabianduran.github.io/Semillero_Konecta/'>
+    /* basename='https://ingfabianduran.github.io/Semillero_Konecta/' */>
     <Provider
       store={store}>
       <App />
