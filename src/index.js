@@ -10,7 +10,8 @@ import { uiReducer } from './store/Ui/reducer';
 const store = createStore(uiReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter
+    basename='https://ingfabianduran.github.io/Semillero_Konecta/'>
     <Provider
       store={store}>
       <App />
