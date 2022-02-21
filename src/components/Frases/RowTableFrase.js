@@ -1,14 +1,40 @@
 import { Fragment, useState } from 'react';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, IconButton, Collapse, Rating, } from '@mui/material';
 import { InsertPhoto, KeyboardArrowDown, KeyboardArrowUp, Visibility } from '@mui/icons-material/';
+import { FotoPersonaje } from '../Personajes/FotoPersonaje';
+import { ComentarioFrase } from './ComentarioFrase';
 
 function RowTable({ frase }) {
   const [expandTable, setExpandTable] = useState(false);
+  const [openFoto, setOpenFoto] = useState(false);
+  const [openComentarios, setOpenComentarios] = useState(false);
+  const [fraseSeleccionada, setFraseSeleccionada] = useState(null);
+  const [dataForm, setDataForm] = useState({ comentario: '' });
   const columnsExpand = ['Id', 'Descripcion de la Frase', 'Calificacion', 'Comentarios'];
+
+  const closeFoto = () => setOpenFoto(false);
+  const closeComentario = () => setOpenComentarios(false);
+  
+  const submitForm = (values) => {
+    console.log(values);
+  };
 
   return (
     <Fragment
       key={frase.personaje}>
+      <FotoPersonaje 
+        openDialog={openFoto} 
+        closeDialog={closeFoto}
+        urlFoto={frase.foto} />
+      {
+        fraseSeleccionada !== null &&
+          <ComentarioFrase 
+            openDialog={openComentarios} 
+            closeDialog={closeComentario}
+            frase={fraseSeleccionada}
+            dataForm={dataForm}
+            submitForm={submitForm} />
+      }
       <TableRow>
           <TableCell>
             <IconButton
@@ -26,7 +52,8 @@ function RowTable({ frase }) {
             <Button
               variant='contained'
               endIcon={<InsertPhoto />}
-              disabled={frase.foto !== '' ? false : true}>
+              disabled={frase.foto !== '' ? false : true}
+              onClick={() => setOpenFoto(true)}>
               Ver Foto
             </Button>
           </TableCell>
@@ -62,13 +89,18 @@ function RowTable({ frase }) {
                       <TableCell sx={{ textAlign: 'center' }}>{ data.id }</TableCell>
                       <TableCell>{ data.frase }</TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
-                        <Rating />
+                        <Rating 
+                          value={data.calificacion} />
                       </TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
                         <Button
                           variant='contained'
                           endIcon={<Visibility/>}
-                          size='small'>
+                          size='small'
+                          onClick={() => {
+                            setOpenComentarios(true);
+                            setFraseSeleccionada(data);
+                          }}>
                             Ver
                         </Button>
                       </TableCell>

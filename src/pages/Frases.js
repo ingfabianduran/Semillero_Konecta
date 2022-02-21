@@ -6,6 +6,7 @@ import { Grid, CircularProgress } from '@mui/material';
 import { TableFrase } from '../components/Frases/TableFrase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../store/Ui/actions';
+import { faker } from '@faker-js/faker';
 
 function Frases() {
   const [frases, setFrases] = useState([]);
@@ -54,10 +55,27 @@ function Frases() {
     return dataEstructurada;
   };
 
+  const addCommentsAndRaiting = (dataEstructurada) => {
+    const frasesWithData = dataEstructurada;
+    frasesWithData.map(({ frases }) => {
+      frases.map(frase => {
+        const raiting = faker.random.arrayElements([1, 2, 3, 4, 5], 1);
+        const numberCommets = faker.random.arrayElement([1, 2, 3, 4, 5], 1);
+        frase.calificacion = raiting[0];
+        for (let i = 0; i < numberCommets; i ++) {
+          const comentario = faker.random.words(5);
+          frase.comentarios.push(comentario);
+        }
+      });
+    });
+    return frasesWithData;
+  };
+
   const loadData = async() => {
     dispatch(setLoading(true));
     const dataFrases = await getProfilePersonaje();
-    setFrases(dataFrases);
+    const frasesWithCommentsAndRaiting = addCommentsAndRaiting(dataFrases);
+    setFrases(frasesWithCommentsAndRaiting);
     setTimeout(() => {
       dispatch(setLoading(false));
     }, 1000);
