@@ -6,8 +6,9 @@ function ComentarioFrase({ openDialog, closeDialog, frase, dataForm, submitForm 
   const formik = useFormik({
     initialValues: dataForm,
     validationSchema: validationComentario,
-    onSubmit: (values) => {
-      submitForm(values);
+    onSubmit: (values, { resetForm }) => {
+      submitForm(values, frase.id);
+      resetForm({ comentario: '' });
     }
   });
 
@@ -20,6 +21,7 @@ function ComentarioFrase({ openDialog, closeDialog, frase, dataForm, submitForm 
       <Card>
         <CardContent>
           <form
+            autoComplete='off'
             onSubmit={formik.handleSubmit}>
             <Stack
               direction='row'

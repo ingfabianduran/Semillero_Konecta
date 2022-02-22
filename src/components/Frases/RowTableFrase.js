@@ -1,22 +1,55 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useContext } from 'react';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, IconButton, Collapse, Rating, } from '@mui/material';
 import { InsertPhoto, KeyboardArrowDown, KeyboardArrowUp, Visibility } from '@mui/icons-material/';
 import { FotoPersonaje } from '../Personajes/FotoPersonaje';
 import { ComentarioFrase } from './ComentarioFrase';
+import { FrasesContext } from '../../context/FrasesContex';
+import { toast } from 'react-toastify';
 
-function RowTable({ frase }) {
+function RowTableFrase({ frase }) {
   const [expandTable, setExpandTable] = useState(false);
   const [openFoto, setOpenFoto] = useState(false);
   const [openComentarios, setOpenComentarios] = useState(false);
   const [fraseSeleccionada, setFraseSeleccionada] = useState(null);
   const [dataForm, setDataForm] = useState({ comentario: '' });
+  const { frases, setFrases } = useContext(FrasesContext);
   const columnsExpand = ['Id', 'Descripcion de la Frase', 'Calificacion', 'Comentarios'];
+  const [startSelect, setStartSelect] = useState();
 
   const closeFoto = () => setOpenFoto(false);
   const closeComentario = () => setOpenComentarios(false);
-  
-  const submitForm = (values) => {
-    console.log(values);
+
+  const updateRaitingFrase = (id, calificacion, personaje) => {
+    const fraseSeleccionada = frase;
+    for (let i = 0; i < fraseSeleccionada.frases.length; i ++) {
+      if (fraseSeleccionada.frases[i].id === id) {
+        fraseSeleccionada.frases[i].calificacion =  calificacion;
+        break;
+      }
+    }
+    const frasesUpdateRaiting = frases;
+    for (let i = 0; i < frasesUpdateRaiting.length; i ++) {
+      if (frasesUpdateRaiting[i].personaje === personaje) {
+        frasesUpdateRaiting[i].frases = fraseSeleccionada.frases;
+      }
+    }
+    setFrases(frasesUpdateRaiting);
+    toast.success('Calificación Actualizada Correctamente!!!');
+  };
+
+  const submitForm = (values, id) => {
+    const { comentario } = values;
+    const frasesWithNewComment = frases;
+    for (let i = 0; i < frasesWithNewComment.length; i ++) {
+      for (let j = 0; j < frasesWithNewComment[i].frases.length; j ++) {
+        if (frasesWithNewComment[i].frases[j].id === id) {
+          frasesWithNewComment[i].frases[j].comentarios.push(comentario);
+        }
+      }
+    }
+    setFrases(frasesWithNewComment);  
+    setDataForm({ comentario: '' });
+    toast.success('Comentario Agregado Correctamente!!!');
   };
 
   return (
@@ -90,7 +123,11 @@ function RowTable({ frase }) {
                       <TableCell>{ data.frase }</TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
                         <Rating 
-                          value={data.calificacion} />
+                          value={data.calificacion}
+                          onChange={(event, value) => updateRaitingFrase(data.id, value, frase.personaje) } 
+                          onChangeActive={(event, value) => {
+                            setStartSelect(value);
+                          }} />
                       </TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
                         <Button
@@ -116,4 +153,4 @@ function RowTable({ frase }) {
   )
 }
 
-export { RowTable };
+export { RowTableFrase };

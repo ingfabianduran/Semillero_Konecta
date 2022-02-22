@@ -6,12 +6,13 @@ import { theme } from './themes/theme';
 import { Routes } from './routes/Routes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './styles/main.css';
 
 function App() {
   return (
     <ThemeProvider
       theme={theme}>
-      <ToastContainer />
+      <ToastContainer toastClassName='toast' />
       <Bar />
       <Grid
         container

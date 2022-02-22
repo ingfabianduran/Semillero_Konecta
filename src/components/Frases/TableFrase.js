@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import { Grid, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import { RowTable } from './RowTableFrase';
+import { RowTableFrase } from './RowTableFrase';
+import { FrasesContext } from '../../context/FrasesContex';
 
-function TableFrase({ frases }) {
+function TableFrase() {
   const columnsName = ['', 'Nombre del Personaje', 'Foto'];
+  const { frases } = useContext(FrasesContext);
 
   return (
     <Grid
@@ -29,7 +32,7 @@ function TableFrase({ frases }) {
           <TableBody>
             {
               frases.map(frase => (
-                <RowTable 
+                <RowTableFrase 
                   frase={frase}
                   key={frase.personaje} />
               ))
