@@ -18,19 +18,23 @@ function Personajes() {
   const changePage = (event, value) => setPage(value);
 
   const loadData = async(url, urlForPages = 'characters') => {
-    dispatch(setLoading(true));
-    const dataPersonajes = await apiGetPersonajes(url);
-    const dataForNumPages = await apiGetPersonajes(urlForPages);
-    const totalPersonajes = dataForNumPages.length;
-    const pages = Math.ceil(totalPersonajes / 5);
-    setPersonajes(dataPersonajes);
-    setNumPages(pages);
-    setTimeout(() => {
-      dispatch(setLoading(false));
-    }, 1000);
+    try {
+      dispatch(setLoading(true));
+      const dataPersonajes = await apiGetPersonajes(url);
+      const dataForNumPages = await apiGetPersonajes(urlForPages);
+      const totalPersonajes = dataForNumPages.length;
+      const pages = Math.ceil(totalPersonajes / 5);
+      setPersonajes(dataPersonajes);
+      setNumPages(pages);
+      setTimeout(() => {
+        dispatch(setLoading(false));
+      }, 1000);
+    } catch (error) {
+
+    }
   };
 
-  const setBusquedaTextField = async(event) => {
+  const setBusquedaTextField = (event) => {
     const textBusqueda = event.target.value;
     setBusquedaPersonaje(textBusqueda);
     setPage(1);

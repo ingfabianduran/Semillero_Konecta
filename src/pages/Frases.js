@@ -12,17 +12,21 @@ function Frases() {
   const loading = useSelector(state => state.loading);
 
   const loadData = async() => {
-    dispatch(setLoading(true));
-    if (localStorage.getItem('frases')) {
-      setFrases(JSON.parse(localStorage.getItem('frases')));
-    } else {
-      const getFrases = await addCommentsAndRaiting();
-      setFrases(getFrases);
-      localStorage.setItem('frases', JSON.stringify(getFrases));
+    try {
+      dispatch(setLoading(true));
+      if (localStorage.getItem('frases')) {
+        setFrases(JSON.parse(localStorage.getItem('frases')));
+      } else {
+        const getFrases = await addCommentsAndRaiting();
+        setFrases(getFrases);
+        localStorage.setItem('frases', JSON.stringify(getFrases));
+      }
+      setTimeout(() => {
+        dispatch(setLoading(false));
+      }, 1000);
+    } catch (error) {
+      
     }
-    setTimeout(() => {
-      dispatch(setLoading(false));
-    }, 1000);
   };
 
   useEffect(() => {
