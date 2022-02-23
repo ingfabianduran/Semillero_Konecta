@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import { CardPersonaje } from './CardPersonaje';
+import { CardPersonaje } from 'components/Personajes/CardPersonaje';
 
 function ListPersonaje({ personajes }) {
   return (

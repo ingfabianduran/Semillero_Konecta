@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Grid, CircularProgress } from '@mui/material';
-import { TableFrase } from '../components/Frases/TableFrase';
+import { TableFrase } from 'components/Frases/TableFrase';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '../store/Ui/actions';
-import { FrasesContext } from '../context/FrasesContex';
-import { addCommentsAndRaiting } from '../services/Frases';
+import { setLoading } from 'store/Ui/actions';
+import { FrasesContext } from 'context/FrasesContex';
+import { addCommentsAndRaiting } from 'services/Frases';
 
 function Frases() {
   const [frases, setFrases] = useState([]);

@@ -1,9 +1,9 @@
 import { Fragment, useState, useContext } from 'react';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, IconButton, Collapse, Rating, } from '@mui/material';
 import { InsertPhoto, KeyboardArrowDown, KeyboardArrowUp, Visibility } from '@mui/icons-material/';
-import { FotoPersonaje } from '../Personajes/FotoPersonaje';
-import { ComentarioFrase } from './ComentarioFrase';
-import { FrasesContext } from '../../context/FrasesContex';
+import { FotoPersonaje } from 'components/Personajes/FotoPersonaje';
+import { ComentarioFrase } from 'components/Frases/ComentarioFrase';
+import { FrasesContext } from 'context/FrasesContex';
 import { toast } from 'react-toastify';
 
 function RowTableFrase({ frase }) {

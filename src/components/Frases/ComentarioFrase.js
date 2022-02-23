@@ -1,6 +1,6 @@
 import { Dialog, Card, CardContent, Stack, TextField, Button, Divider, List, ListItem, ListItemText } from '@mui/material';
 import { useFormik } from 'formik';
-import { validationComentario } from '../../validators/validators';
+import { validationComentario } from 'validators/validators';
 
 function ComentarioFrase({ openDialog, closeDialog, frase, dataForm, submitForm }) {
   const formik = useFormik({

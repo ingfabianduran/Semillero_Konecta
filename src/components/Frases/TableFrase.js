@@ -1,6 +1,6 @@
 import { Grid, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import { RowTableFrase } from './RowTableFrase';
-import { FrasesContext } from '../../context/FrasesContex';
+import { RowTableFrase } from 'components/Frases/RowTableFrase';
+import { FrasesContext } from 'context/FrasesContex';
 import { useContext } from 'react';
 
 function TableFrase() {

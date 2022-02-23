@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getData as apiGetPersonajes } from '../api/api';
+import { getData as apiGetPersonajes } from 'api/api';
 import { Grid, CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '../store/Ui/actions';
-import { PaginationPersonaje } from '../components/Personajes/PaginationPersonaje';
-import { FormPersonaje } from '../components/Personajes/FormPersonaje';
-import { ListPersonaje } from '../components/Personajes/ListPersonaje';
+import { setLoading } from 'store/Ui/actions';
+import { PaginationPersonaje } from 'components/Personajes/PaginationPersonaje';
+import { FormPersonaje } from 'components/Personajes/FormPersonaje';
+import { ListPersonaje } from 'components/Personajes/ListPersonaje';
 
 function Personajes() {
   const dispatch = useDispatch();

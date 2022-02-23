@@ -15,8 +15,9 @@ function Bar() {
         <Toolbar>
           <Typography
             variant='h6' 
-            component='div' 
-            sx={{ flexGrow: 1 }}>
+            component={Link}
+            to='/' 
+            sx={{ flexGrow: 1, textDecoration: 'none', color: 'white' }}>
             Semillero Konecta
           </Typography>
           {
