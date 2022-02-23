@@ -4,6 +4,8 @@ function PaginationPersonaje({ page, numPages, changePage }) {
   return (
     <Grid
       item
+      md={10}
+      sm={10}
       xs={10}
       sx={{ display: 'flex', justifyContent: 'center' }}>
       <Stack

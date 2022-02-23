@@ -7,7 +7,6 @@ function FormPersonaje({ searchPersonaje }) {
       xs={10}
       sx={{ display: 'flex', justifyContent: 'center' }}>
       <TextField
-        autoComplete={false}
         sx={{ width: 600, backgroundColor: 'white' }}
         label='Buscar Personaje'
         variant='outlined' 

@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 .toast {
     font-family: 'Roboto Condensed';
     font-size: 13px;

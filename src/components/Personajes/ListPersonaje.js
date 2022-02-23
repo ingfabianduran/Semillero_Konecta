@@ -11,6 +11,7 @@ function ListPersonaje({ personajes }) {
               key={personaje.char_id} 
               item
               xs={10}
+              sm={4}
               md={2}>
               <CardPersonaje
                 personaje={personaje} />
