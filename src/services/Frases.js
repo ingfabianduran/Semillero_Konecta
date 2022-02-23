@@ -50,7 +50,7 @@ const addCommentsAndRaiting = async() => {
     const frasesWithData = dataWithProfile[i].frases;
     for (let j = 0; j < frasesWithData.length; j ++) {
       const raiting = faker.random.arrayElements([1, 2, 3, 4, 5], 1)[0];
-      const numberCommets = faker.random.arrayElement([1, 2, 3, 4, 5], 1)[0];
+      const numberCommets = faker.random.arrayElements([1, 2, 3, 4, 5], 1)[0];
       frasesWithData[j].calificacion = raiting;
       for (let k = 0; k < numberCommets; k ++) {
         const comentario = faker.random.words(5);
