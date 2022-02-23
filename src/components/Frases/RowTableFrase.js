@@ -33,6 +33,7 @@ function RowTableFrase({ frase }) {
         frasesUpdateRaiting[i].frases = fraseSeleccionada.frases;
       }
     }
+    localStorage.setItem('frases', JSON.stringify(frasesUpdateRaiting));
     setFrases(frasesUpdateRaiting);
     toast.success('Calificación Actualizada Correctamente!!!');
   };
@@ -47,6 +48,7 @@ function RowTableFrase({ frase }) {
         }
       }
     }
+    localStorage.setItem('frases', JSON.stringify(frasesWithNewComment));
     setFrases(frasesWithNewComment);  
     setDataForm({ comentario: '' });
     toast.success('Comentario Agregado Correctamente!!!');

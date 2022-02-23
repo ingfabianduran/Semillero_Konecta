@@ -1,7 +1,7 @@
-import { useContext } from 'react';
 import { Grid, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import { RowTableFrase } from './RowTableFrase';
 import { FrasesContext } from '../../context/FrasesContex';
+import { useContext } from 'react';
 
 function TableFrase() {
   const columnsName = ['', 'Nombre del Personaje', 'Foto'];

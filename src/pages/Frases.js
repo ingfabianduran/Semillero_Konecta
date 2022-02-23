@@ -13,8 +13,13 @@ function Frases() {
 
   const loadData = async() => {
     dispatch(setLoading(true));
-    const getFrases = await addCommentsAndRaiting();
-    setFrases(getFrases);
+    if (localStorage.getItem('frases')) {
+      setFrases(JSON.parse(localStorage.getItem('frases')));
+    } else {
+      const getFrases = await addCommentsAndRaiting();
+      setFrases(getFrases);
+      localStorage.setItem('frases', JSON.stringify(getFrases));
+    }
     setTimeout(() => {
       dispatch(setLoading(false));
     }, 1000);
