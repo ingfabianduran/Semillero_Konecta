@@ -1,6 +1,7 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import App from '../App';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Home } from 'pages/Home';
 
 test('Validar si existe un titulo', async() => {
   const { findByText } = render(
@@ -9,13 +10,4 @@ test('Validar si existe un titulo', async() => {
     </Router>);
   const title = await findByText(/Breaking Bad API/i);
   expect(title).toBeInTheDocument();
-});
-
-test('Search form personaje', async() => {
-  render(
-    <Router>
-      <App />
-    </Router>);
-  const input = await screen.findByRole('textbox');
-  fireEvent.change(input, { value: 'Jesse' });
 });

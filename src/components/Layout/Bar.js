@@ -1,12 +1,8 @@
-import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { MenuApp } from 'components/Layout/MenuApp';
 
 function Bar() {
-  const links = [
-    { nombre: 'Personajes', url: '/personajes' },
-    { nombre: 'Frases', url: '/frases' }
-  ];
-  
   return (
     <Box
       sx={{ flexGrow: 1 }}>
@@ -20,17 +16,10 @@ function Bar() {
             sx={{ flexGrow: 1, textDecoration: 'none', color: 'white' }}>
             Semillero Konecta
           </Typography>
-          {
-            links.map(link => (
-              <Button
-                key={link.nombre}
-                component={Link}
-                to={link.url}
-                color='inherit'>
-                { link.nombre }
-              </Button>
-            ))
-          }
+          <MenuApp 
+            size='medium'
+            variant='text'
+            color='inherit' /> 
         </Toolbar>
       </AppBar>
     </Box>

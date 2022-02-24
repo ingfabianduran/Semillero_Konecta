@@ -18,7 +18,7 @@ function App() {
         container
         justifyContent='center'
         alignItems='center'
-        sx={{ padding: 10, minHeight: '100vh', backgroundColor: '#fafafa' }}>
+        sx={{ paddingX: 5, paddingY: 10, minHeight: '100vh', backgroundColor: '#fafafa' }}>
         <Routes />
       </Grid>
       <Footer />

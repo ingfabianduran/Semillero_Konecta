@@ -11,6 +11,7 @@ function PaginationPersonaje({ page, numPages, changePage }) {
       <Stack
         spacing={1}>
         <Pagination
+          shape='rounded'
           size='small'
           page={page}
           count={numPages}

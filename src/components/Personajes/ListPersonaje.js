@@ -8,6 +8,7 @@ function ListPersonaje({ personajes }) {
         personajes.length > 0 ?
           personajes.map(personaje => (
             <Grid
+              justifyContent='center'
               key={personaje.char_id} 
               item
               xs={10}
