@@ -6,10 +6,10 @@ import { MisPersonajes } from 'pages/MisPersonajes';
 
 function Routes() {
   const routes = [
-    { url: '/frases', elemento: <Frases /> },
-    { url: '/personajes', elemento: <Personajes /> },
+    { url: 'frases', elemento: <Frases /> },
+    { url: 'personajes', elemento: <Personajes /> },
     { url: '/', elemento: <Home /> },
-    { url: '/mis_personajes', elemento: <MisPersonajes /> }
+    { url: 'mis_personajes', elemento: <MisPersonajes /> }
   ];
 
   return (

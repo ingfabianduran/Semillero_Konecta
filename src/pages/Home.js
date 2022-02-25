@@ -1,6 +1,4 @@
-import { Stack, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { MenuApp } from 'components/Layout/MenuApp';
+import { Stack, Typography } from '@mui/material';
 
 function Home() {
   return (
@@ -17,7 +15,6 @@ function Home() {
         justifyContent='center'
         direction='row'
         spacing={2}>
-        <MenuApp />
       </Stack>
     </Stack>
   )

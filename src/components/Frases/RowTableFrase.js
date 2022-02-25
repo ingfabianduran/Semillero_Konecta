@@ -56,7 +56,7 @@ function RowTableFrase({ frase }) {
 
   return (
     <Fragment
-      key={frase.personaje}>
+      key={frase.personaje || frase.nombreCompleto}>
       <FotoPersonaje 
         openDialog={openFoto} 
         closeDialog={closeFoto}
@@ -81,7 +81,7 @@ function RowTableFrase({ frase }) {
               }
             </IconButton>
           </TableCell>
-          <TableCell>{ frase.personaje }</TableCell>
+          <TableCell>{ frase.personaje || frase.nombreCompleto }</TableCell>
           <TableCell
             sx={{ textAlign: 'center' }}>
             <Button

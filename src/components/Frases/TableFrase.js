@@ -34,7 +34,7 @@ function TableFrase() {
               frases.map(frase => (
                 <RowTableFrase 
                   frase={frase}
-                  key={frase.personaje} />
+                  key={frase.personaje || frase.id} />
               ))
             }
           </TableBody>

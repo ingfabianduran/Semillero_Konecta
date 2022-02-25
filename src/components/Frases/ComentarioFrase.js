@@ -50,9 +50,9 @@ function ComentarioFrase({ openDialog, closeDialog, frase, dataForm, submitForm 
             {
               frase.comentarios.map(comentario => (
                 <ListItem
-                  key={comentario}>
+                  key={comentario.id || comentario}>
                   <ListItemText 
-                    primary={comentario} />
+                    primary={comentario.comentario || comentario} />
                 </ListItem>
               ))
             }
