@@ -10,7 +10,7 @@ import { getMisPersonajes } from 'services/MisPersonajes';
 function MisPersonajes() {
   const [frases, setFrases] = useState([]);
   const [numPages, setNumPages] = useState(null);
-  const [page, setPage] = useState(null);
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const loading = useSelector(state => state.loading);
 

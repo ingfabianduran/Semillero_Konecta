@@ -5,7 +5,7 @@ const configAxios = axios.create({
 });
 
 const configAxiosLaravel = axios.create({
-  baseURL: 'http://127.0.0.1/api/',
+  baseURL: 'https://frases-personajes-konecta.herokuapp.com/api/',
   headers: {
     'Accept': 'application/json'
   }
