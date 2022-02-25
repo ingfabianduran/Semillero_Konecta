@@ -5,6 +5,7 @@ import { FotoPersonaje } from 'components/Personajes/FotoPersonaje';
 import { ComentarioFrase } from 'components/Frases/ComentarioFrase';
 import { FrasesContext } from 'context/FrasesContex';
 import { toast } from 'react-toastify';
+import { updateCalificacion, addComentario } from 'services/MisPersonajes';
 
 function RowTableFrase({ frase }) {
   const [expandTable, setExpandTable] = useState(false);
@@ -12,46 +13,71 @@ function RowTableFrase({ frase }) {
   const [openComentarios, setOpenComentarios] = useState(false);
   const [fraseSeleccionada, setFraseSeleccionada] = useState(null);
   const [dataForm, setDataForm] = useState({ comentario: '' });
-  const { frases, setFrases } = useContext(FrasesContext);
+  const { frases, setFrases, isApiConsumer, page } = useContext(FrasesContext);
   const columnsExpand = ['Id', 'Descripcion de la Frase', 'Calificacion', 'Comentarios'];
   const [startSelect, setStartSelect] = useState();
 
   const closeFoto = () => setOpenFoto(false);
   const closeComentario = () => setOpenComentarios(false);
 
-  const updateRaitingFrase = (id, calificacion, personaje) => {
-    const fraseSeleccionada = frase;
-    for (let i = 0; i < fraseSeleccionada.frases.length; i ++) {
-      if (fraseSeleccionada.frases[i].id === id) {
-        fraseSeleccionada.frases[i].calificacion =  calificacion;
-        break;
-      }
-    }
-    const frasesUpdateRaiting = frases;
-    for (let i = 0; i < frasesUpdateRaiting.length; i ++) {
-      if (frasesUpdateRaiting[i].personaje === personaje) {
-        frasesUpdateRaiting[i].frases = fraseSeleccionada.frases;
-      }
-    }
-    localStorage.setItem('frases', JSON.stringify(frasesUpdateRaiting));
-    setFrases(frasesUpdateRaiting);
-    toast.success('Calificación Actualizada Correctamente!!!');
-  };
-
-  const submitForm = (values, id) => {
-    const { comentario } = values;
-    const frasesWithNewComment = frases;
-    for (let i = 0; i < frasesWithNewComment.length; i ++) {
-      for (let j = 0; j < frasesWithNewComment[i].frases.length; j ++) {
-        if (frasesWithNewComment[i].frases[j].id === id) {
-          frasesWithNewComment[i].frases[j].comentarios.push(comentario);
+  const updateRaitingFrase = async(id, calificacion, personaje) => {
+    if (!isApiConsumer) {
+      const fraseSeleccionada = frase;
+      for (let i = 0; i < fraseSeleccionada.frases.length; i ++) {
+        if (fraseSeleccionada.frases[i].id === id) {
+          fraseSeleccionada.frases[i].calificacion =  calificacion;
+          break;
         }
       }
+      const frasesUpdateRaiting = frases;
+      for (let i = 0; i < frasesUpdateRaiting.length; i ++) {
+        if (frasesUpdateRaiting[i].personaje === personaje) {
+          frasesUpdateRaiting[i].frases = fraseSeleccionada.frases;
+        }
+      }
+      localStorage.setItem('frases', JSON.stringify(frasesUpdateRaiting));
+      setFrases(frasesUpdateRaiting);
+      toast.success('Calificación Actualizada Correctamente!!!');
+    } else {
+      try {
+        const url = `frases/${id}`;
+        const dataCalificacion = { calificacion: calificacion };
+        const { message, data } = await updateCalificacion(url, dataCalificacion, page);
+        toast.success(message);
+        setFrases(data);
+      } catch (error) {
+        toast.error('Algo inesperado ocurrio aquí');
+      }
     }
-    localStorage.setItem('frases', JSON.stringify(frasesWithNewComment));
-    setFrases(frasesWithNewComment);  
-    setDataForm({ comentario: '' });
-    toast.success('Comentario Agregado Correctamente!!!');
+  };
+
+  const submitForm = async(values, id) => {
+    if (!isApiConsumer) {
+      const { comentario } = values;
+      const frasesWithNewComment = frases;
+      for (let i = 0; i < frasesWithNewComment.length; i ++) {
+        for (let j = 0; j < frasesWithNewComment[i].frases.length; j ++) {
+          if (frasesWithNewComment[i].frases[j].id === id) {
+            frasesWithNewComment[i].frases[j].comentarios.push(comentario);
+          }
+        }
+      }
+      localStorage.setItem('frases', JSON.stringify(frasesWithNewComment));
+      setFrases(frasesWithNewComment);  
+      setDataForm({ comentario: '' });
+      toast.success('Comentario Agregado Correctamente!!!');
+    } else {
+      try {
+        const dataCalificacion = { comentario: values.comentario, frase_id: id };
+        const { message, data } = await addComentario(dataCalificacion, page);
+        setFrases(data);
+        setOpenComentarios(false);
+        setDataForm({ comentario: '' });
+        toast.success(message);
+      } catch (error) {
+        toast.error('Algo inesperado ocurrio aquí');
+      }
+    }
   };
 
   return (

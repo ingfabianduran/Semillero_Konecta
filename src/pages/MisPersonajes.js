@@ -9,10 +9,11 @@ import { getMisPersonajes } from 'services/MisPersonajes';
 
 function MisPersonajes() {
   const [frases, setFrases] = useState([]);
-  const [numPages, setNumPages] = useState(null);
+  const [numPages, setNumPages] = useState(1);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const loading = useSelector(state => state.loading);
+  const isApiConsumer = true;
 
   const loadData = async() => {
     try {
@@ -38,7 +39,7 @@ function MisPersonajes() {
 
   return (
     <FrasesContext.Provider
-      value={{ frases }}>
+      value={{ frases, setFrases, isApiConsumer, page }}>
       <Grid
         container
         spacing={3}

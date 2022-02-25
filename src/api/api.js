@@ -1,5 +1,4 @@
 import { configAxios as axios, configAxiosLaravel as axiosB } from './axios';
-import { toast } from 'react-toastify';
 
 const getData = async(url) => {
   try {
@@ -7,7 +6,7 @@ const getData = async(url) => {
     const resData = await res.data;
     return resData;
   } catch (error) {
-    toast.error(error);
+    
   }
 };
 
@@ -21,7 +20,7 @@ const apiData = async(method, url, data = {}) => {
     const resData = await res.data;
     return resData;
   } catch (error) {
-    toast.error(error);
+    
   }
 };
 
