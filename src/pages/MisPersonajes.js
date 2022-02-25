@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from 'store/Ui/actions';
-import { Grid, CircularProgress } from '@mui/material';
+import { Grid, CircularProgress, Button } from '@mui/material';
 import { TableFrase } from 'components/Frases/TableFrase';
 import { PaginationPersonaje } from 'components/Personajes/PaginationPersonaje';
 import { FrasesContext } from 'context/FrasesContex';
 import { getMisPersonajes } from 'services/MisPersonajes';
+import { ModalPersonaje } from 'components/Personajes/ModalPersonaje';
 
 function MisPersonajes() {
   const [frases, setFrases] = useState([]);
   const [numPages, setNumPages] = useState(1);
   const [page, setPage] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   const loading = useSelector(state => state.loading);
   const isApiConsumer = true;
@@ -32,6 +34,7 @@ function MisPersonajes() {
   };
 
   const changePage = (event, value) => setPage(value);
+  const closeModal = () => setOpenModal(false);
   
   useEffect(() => {
     loadData();
@@ -40,13 +43,27 @@ function MisPersonajes() {
   return (
     <FrasesContext.Provider
       value={{ frases, setFrases, isApiConsumer, page }}>
+      <ModalPersonaje 
+        openModal={openModal}
+        setOpenModal={closeModal} />
       <Grid
         container
-        spacing={3}
+        spacing={1}
         justifyContent='center'>
         {
           !loading ?
             <>
+              <Grid
+                item
+                xs={12}
+                sx={{ display: 'flex', justifyContent: 'end' }}>
+                <Button
+                  variant='contained'
+                  size='large'
+                  onClick={() => setOpenModal(true) }>
+                  Agregar Personaje
+                </Button>
+              </Grid>
               <TableFrase />
               <PaginationPersonaje 
                 page={page}
