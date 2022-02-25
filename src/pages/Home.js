@@ -11,11 +11,6 @@ function Home() {
         sx={{ textAlign: 'center' }}>
         Breaking Bad API 
       </Typography>
-      <Stack
-        justifyContent='center'
-        direction='row'
-        spacing={2}>
-      </Stack>
     </Stack>
   )
 }
