@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { updateCalificacion, addComentario } from 'services/MisPersonajes';
 
 function RowTableFrase({ frase }) {
+  console.log(frase);
   const [expandTable, setExpandTable] = useState(false);
   const [openFoto, setOpenFoto] = useState(false);
   const [openComentarios, setOpenComentarios] = useState(false);
@@ -113,7 +114,7 @@ function RowTableFrase({ frase }) {
             <Button
               variant='contained'
               endIcon={<InsertPhoto />}
-              disabled={frase.foto !== '' ? false : true}
+              disabled={frase.foto !== '' && frase.foto !== null ? false : true}
               onClick={() => setOpenFoto(true)}>
               Ver Foto
             </Button>
