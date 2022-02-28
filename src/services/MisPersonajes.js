@@ -32,4 +32,15 @@ const addComentario = async(dataComentario, actualPage) => {
   }
 };
 
-export { getMisPersonajes, updateCalificacion, addComentario };
+const addPersonaje = async(dataPersonaje) => {
+  try {
+    const urlAddPersonaje = 'personajes/add';
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const { message } = await apiData('POST', urlAddPersonaje, dataPersonaje, headers);
+    return { message };
+  } catch (error) {
+    
+  }
+};
+
+export { getMisPersonajes, updateCalificacion, addComentario, addPersonaje };

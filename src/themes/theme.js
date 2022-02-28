@@ -12,7 +12,7 @@ const theme = createTheme({
       main: deepPurple[500]
     },
     secondary: {
-      main: grey[100]
+      main: grey[900]
     }
   }
 });

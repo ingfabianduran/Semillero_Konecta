@@ -10,12 +10,13 @@ const getData = async(url) => {
   }
 };
 
-const apiData = async(method, url, data = {}) => {
+const apiData = async(method, url, data = {}, headers) => {
   try {
     const res = await axiosB({
       method: method,
       url: url,
-      data: data
+      data: data,
+      headers: headers
     });
     const resData = await res.data;
     return resData;

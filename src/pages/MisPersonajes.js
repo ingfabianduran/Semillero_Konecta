@@ -5,17 +5,29 @@ import { Grid, CircularProgress, Button } from '@mui/material';
 import { TableFrase } from 'components/Frases/TableFrase';
 import { PaginationPersonaje } from 'components/Personajes/PaginationPersonaje';
 import { FrasesContext } from 'context/FrasesContex';
-import { getMisPersonajes } from 'services/MisPersonajes';
+import { getMisPersonajes, addPersonaje } from 'services/MisPersonajes';
 import { ModalPersonaje } from 'components/Personajes/ModalPersonaje';
+import { toast } from 'react-toastify';
 
 function MisPersonajes() {
   const [frases, setFrases] = useState([]);
   const [numPages, setNumPages] = useState(1);
   const [page, setPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
+  const [loadingForm, setLoadingForm] = useState(false);
+  const defaultValuesForm = { frase: '', calificacion: '' };
+  const [formPersonaje, setFormPersonaje] = useState({
+    nombreCompleto: '',
+    foto: '',
+    frases: [defaultValuesForm]
+  });
+
   const dispatch = useDispatch();
   const loading = useSelector(state => state.loading);
   const isApiConsumer = true;
+
+  const changePage = (event, value) => setPage(value);
+  const closeModal = () => setOpenModal(false);
 
   const loadData = async() => {
     try {
@@ -33,8 +45,22 @@ function MisPersonajes() {
     }
   };
 
-  const changePage = (event, value) => setPage(value);
-  const closeModal = () => setOpenModal(false);
+  const submitForm = async(values) => {
+    try {
+      setLoadingForm(true);
+      const formData = new FormData();
+      formData.append('nombreCompleto', values.nombreCompleto);
+      formData.append('foto', values.foto);
+      formData.append('frases', JSON.stringify(values.frases));
+      const { message } = await addPersonaje(formData);
+      setTimeout(() => {
+        setLoadingForm(false);
+        toast.success(message);
+      }, 1000);
+    } catch (error) {
+      toast.error('Algo inesperado ocurrio aqui');
+    }
+  };
   
   useEffect(() => {
     loadData();
@@ -45,7 +71,12 @@ function MisPersonajes() {
       value={{ frases, setFrases, isApiConsumer, page }}>
       <ModalPersonaje 
         openModal={openModal}
-        setOpenModal={closeModal} />
+        setOpenModal={closeModal}
+        formPersonaje={formPersonaje}
+        setFormPersonaje={setFormPersonaje}
+        defaultValuesForm={defaultValuesForm}
+        submitForm={submitForm}
+        loadingForm={loadingForm} />
       <Grid
         container
         spacing={1}
