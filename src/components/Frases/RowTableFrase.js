@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import { updateCalificacion, addComentario } from 'services/MisPersonajes';
 
 function RowTableFrase({ frase }) {
-  console.log(frase);
   const [expandTable, setExpandTable] = useState(false);
   const [openFoto, setOpenFoto] = useState(false);
   const [openComentarios, setOpenComentarios] = useState(false);

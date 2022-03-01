@@ -41,7 +41,8 @@ function MisPersonajes() {
         dispatch(setLoading(false));
       }, 1000);
     } catch (error) {
-      
+      toast.error('Algo inesperado ocurrio aquí');
+      dispatch(setLoading(false));
     }
   };
 
@@ -53,11 +54,14 @@ function MisPersonajes() {
       formData.append('foto', values.foto);
       formData.append('frases', JSON.stringify(values.frases));
       const { message } = await addPersonaje(formData);
-      setTimeout(() => {
-        setLoadingForm(false);
-        toast.success(message);
-      }, 1000);
+      setOpenModal(false);
+      setLoadingForm(false);
+      toast.success(message);
+      setTimeout(async() => {
+        await loadData();
+      }, 1500);
     } catch (error) {
+      setLoadingForm(false);
       toast.error('Algo inesperado ocurrio aqui');
     }
   };

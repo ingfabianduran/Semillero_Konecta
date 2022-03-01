@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { FormFrase } from 'components/Frases/FormFrase';
 import { validationPersonaje } from 'validators/validators';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function ModalPersonaje({ openModal, setOpenModal, formPersonaje, setFormPersonaje, submitForm, loadingForm }) {
   const defaultValuesForm = { frase: '', calificacion: 0 };
@@ -11,13 +12,18 @@ function ModalPersonaje({ openModal, setOpenModal, formPersonaje, setFormPersona
     initialValues: formPersonaje,
     validationSchema: validationPersonaje,
     onSubmit: (values, { resetForm }) => {
-      submitForm(values);
-      setRowsFrases([defaultValuesForm]);
-      resetForm({
-        nombreCompleto: '',
-        foto: '',
-        frases: rowsFrases
-      });
+      const validateFrases = values.frases.filter(item => item.frase === '');
+      if (validateFrases.length === 0) {
+        submitForm(values);
+        setRowsFrases([defaultValuesForm]);
+        resetForm({
+          nombreCompleto: '',
+          foto: '',
+          frases: rowsFrases
+        });
+      } else {
+        toast.error('Por favor registrar todas las frases');
+      }
     }
   });
   const [rowsFrases, setRowsFrases] = useState([defaultValuesForm]);

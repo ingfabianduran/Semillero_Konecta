@@ -13,7 +13,8 @@ function FormFrase({ deleteRow, changeRow, frase, calificacion }) {
         md={8}>
         <FormControl
           fullWidth>
-          <TextField 
+          <TextField
+            name='frase'
             label='Frase' 
             variant='outlined'
             value={frase}

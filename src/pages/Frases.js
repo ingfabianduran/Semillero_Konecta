@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from 'store/Ui/actions';
 import { FrasesContext } from 'context/FrasesContex';
 import { addCommentsAndRaiting } from 'services/Frases';
+import { toast } from 'react-toastify';
 
 function Frases() {
   const [frases, setFrases] = useState([]);
@@ -25,7 +26,8 @@ function Frases() {
         dispatch(setLoading(false));
       }, 1000);
     } catch (error) {
-      
+      toast.error('Algo inesperado ocurrio aquí');
+      dispatch(setLoading(false));
     }
   };
 

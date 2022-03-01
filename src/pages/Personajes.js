@@ -6,6 +6,7 @@ import { setLoading } from 'store/Ui/actions';
 import { PaginationPersonaje } from 'components/Personajes/PaginationPersonaje';
 import { FormPersonaje } from 'components/Personajes/FormPersonaje';
 import { ListPersonaje } from 'components/Personajes/ListPersonaje';
+import { toast } from 'react-toastify';
 
 function Personajes() {
   const dispatch = useDispatch();
@@ -30,7 +31,8 @@ function Personajes() {
         dispatch(setLoading(false));
       }, 1000);
     } catch (error) {
-
+      toast.error('Algo inesperado ocurrio aquí');
+      dispatch(setLoading(false));
     }
   };
 
