@@ -7,6 +7,7 @@ import { PaginationPersonaje } from 'components/Personajes/PaginationPersonaje';
 import { FormPersonaje } from 'components/Personajes/FormPersonaje';
 import { ListPersonaje } from 'components/Personajes/ListPersonaje';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 function Personajes() {
   const dispatch = useDispatch();
@@ -55,29 +56,34 @@ function Personajes() {
   }, [page, busquedaPersonaje]);
 
   return (
-    <Grid
-      container
-      spacing={3}
-      columns={10}
-      justifyContent='center'>
-      <FormPersonaje 
-        searchPersonaje={setBusquedaTextField} />
-        {
-          !loading ?
-            <>
-              <ListPersonaje 
-                personajes={personajes} />
-              <PaginationPersonaje 
-                page={page}
-                numPages={numPages}
-                changePage={changePage} />
-            </>
-          :
-            <CircularProgress 
-              size={60} 
-              sx={{ marginTop: 2 }} />
-        }
-    </Grid>
+    <>
+      <Helmet>
+        <title>Personajes | Breaking Bad API</title>
+      </Helmet>
+      <Grid
+        container
+        spacing={3}
+        columns={10}
+        justifyContent='center'>
+        <FormPersonaje 
+          searchPersonaje={setBusquedaTextField} />
+          {
+            !loading ?
+              <>
+                <ListPersonaje 
+                  personajes={personajes} />
+                <PaginationPersonaje 
+                  page={page}
+                  numPages={numPages}
+                  changePage={changePage} />
+              </>
+            :
+              <CircularProgress 
+                size={60} 
+                sx={{ marginTop: 2 }} />
+          }
+      </Grid>
+    </>
   )
 }
 

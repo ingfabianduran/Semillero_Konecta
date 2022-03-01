@@ -6,6 +6,7 @@ import { setLoading } from 'store/Ui/actions';
 import { FrasesContext } from 'context/FrasesContex';
 import { addCommentsAndRaiting } from 'services/Frases';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 function Frases() {
   const [frases, setFrases] = useState([]);
@@ -38,6 +39,9 @@ function Frases() {
   return (
     <FrasesContext.Provider
       value={{ frases, setFrases }}>
+      <Helmet>
+        <title>Frases | Breaking Bad API</title>
+      </Helmet>
       <Grid
         container
         spacing={3}

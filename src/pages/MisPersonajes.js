@@ -8,6 +8,7 @@ import { FrasesContext } from 'context/FrasesContex';
 import { getMisPersonajes, addPersonaje } from 'services/MisPersonajes';
 import { ModalPersonaje } from 'components/Personajes/ModalPersonaje';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 function MisPersonajes() {
   const [frases, setFrases] = useState([]);
@@ -73,6 +74,9 @@ function MisPersonajes() {
   return (
     <FrasesContext.Provider
       value={{ frases, setFrases, isApiConsumer, page }}>
+      <Helmet>
+        <title>Mis Personajes | Breaking Bad API</title>
+      </Helmet>
       <ModalPersonaje 
         openModal={openModal}
         setOpenModal={closeModal}
