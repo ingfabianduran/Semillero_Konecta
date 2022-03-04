@@ -149,7 +149,8 @@ function ModalPersonaje({ openModal, setOpenModal, formPersonaje, setFormPersona
           <Button
             variant='contained'
             color='secondary'
-            type='button'>
+            type='button'
+            onClick={() => setOpenModal(false)}>
             Cancelar
           </Button>
         </DialogActions>

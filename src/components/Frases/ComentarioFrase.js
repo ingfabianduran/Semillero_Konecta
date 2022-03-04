@@ -1,8 +1,9 @@
-import { Dialog, Card, CardContent, Stack, TextField, Button, Divider, List, ListItem, ListItemText } from '@mui/material';
+import { Dialog, Card, CardContent, Stack, TextField, Divider, List, ListItem, ListItemText } from '@mui/material';
 import { useFormik } from 'formik';
 import { validationComentario } from 'validators/validators';
+import { LoadingButton } from '@mui/lab';
 
-function ComentarioFrase({ openDialog, closeDialog, frase, dataForm, submitForm }) {
+function ComentarioFrase({ openDialog, closeDialog, frase, dataForm, submitForm, loading }) {
   const formik = useFormik({
     initialValues: dataForm,
     validationSchema: validationComentario,
@@ -35,11 +36,12 @@ function ComentarioFrase({ openDialog, closeDialog, frase, dataForm, submitForm 
                 onChange={formik.handleChange}
                 error={formik.touched.comentario && Boolean(formik.errors.comentario)}
                 helperText={formik.touched.comentario && formik.errors.comentario} />
-              <Button
+              <LoadingButton
                 variant='contained'
-                type='submit'>
+                type='submit'
+                loading={loading}>
                 Registrar
-              </Button>
+              </LoadingButton>
             </Stack>
           </form>
           <Divider

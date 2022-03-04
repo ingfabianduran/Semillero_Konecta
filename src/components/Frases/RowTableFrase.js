@@ -13,6 +13,7 @@ function RowTableFrase({ frase }) {
   const [openComentarios, setOpenComentarios] = useState(false);
   const [fraseSeleccionada, setFraseSeleccionada] = useState(null);
   const [dataForm, setDataForm] = useState({ comentario: '' });
+  const [loading, setLoading] = useState(false);
   const { frases, setFrases, isApiConsumer, page } = useContext(FrasesContext);
   const columnsExpand = ['Id', 'Descripcion de la Frase', 'Calificacion', 'Promedio', 'Comentarios'];
 
@@ -52,6 +53,7 @@ function RowTableFrase({ frase }) {
   };
 
   const submitForm = async(values, id) => {
+    setLoading(true);
     if (!isApiConsumer) {
       const { comentario } = values;
       const frasesWithNewComment = frases;
@@ -62,20 +64,27 @@ function RowTableFrase({ frase }) {
           }
         }
       }
-      localStorage.setItem('frases', JSON.stringify(frasesWithNewComment));
-      setFrases(frasesWithNewComment);  
-      setOpenComentarios(false);
-      setDataForm({ comentario: '' });
-      toast.success('Comentario Agregado Correctamente!!!');
+      setTimeout(() => {
+        setLoading(false);
+        localStorage.setItem('frases', JSON.stringify(frasesWithNewComment));
+        setFrases(frasesWithNewComment);  
+        setOpenComentarios(false);
+        setDataForm({ comentario: '' });
+        toast.success('Comentario Agregado Correctamente!!!');
+      }, 1000);
     } else {
       try {
         const dataComentario = { comentario: values.comentario, frase_id: id };
         const { message, data } = await addComentario(dataComentario, page);
-        setFrases(data);
-        setOpenComentarios(false);
-        setDataForm({ comentario: '' });
-        toast.success(message);
+        setTimeout(() => {
+          setFrases(data);
+          setOpenComentarios(false);
+          setDataForm({ comentario: '' });
+          toast.success(message);
+          setLoading(false);
+        }, 1000);
       } catch (error) {
+        setLoading(false);
         toast.error('Algo inesperado ocurrio aquí');
       }
     }
@@ -109,7 +118,8 @@ function RowTableFrase({ frase }) {
             closeDialog={closeComentario}
             frase={fraseSeleccionada}
             dataForm={dataForm}
-            submitForm={submitForm} />
+            submitForm={submitForm} 
+            loading={loading} />
       }
       <TableRow>
           <TableCell>
