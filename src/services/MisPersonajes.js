@@ -9,9 +9,9 @@ const getMisPersonajes = async(url) => {
   }
 };
 
-const updateCalificacion = async(url, dataCalificacion, actualPage) => {
+const updateCalificacion = async(dataCalificacion, actualPage) => {
   try {
-    const { message } = await apiData('PUT', url, dataCalificacion);
+    const { message } = await apiData('POST', 'notas/add', dataCalificacion);
     const urlAllPersonajes = `personajes/all?page=${actualPage}`;
     const { data } = await apiData('GET', urlAllPersonajes);
     return { data, message };

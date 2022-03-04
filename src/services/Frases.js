@@ -17,7 +17,7 @@ const estructurarData = async() => {
             id: item.quote_id,
             frase: item.quote,
             comentarios: [],
-            calificacion: ''
+            listaCalificaciones: []
           }
         })
       };
@@ -60,7 +60,7 @@ const addCommentsAndRaiting = async() => {
       for (let j = 0; j < frasesWithData.length; j ++) {
         const raiting = faker.random.arrayElements([1, 2, 3, 4, 5], 1)[0];
         const numberCommets = faker.random.arrayElements([1, 2, 3, 4, 5], 1)[0];
-        frasesWithData[j].calificacion = raiting;
+        frasesWithData[j].listaCalificaciones.push(raiting);
         for (let k = 0; k < numberCommets; k ++) {
           const comentario = faker.random.words(5);
           frasesWithData[j].comentarios.push(comentario);

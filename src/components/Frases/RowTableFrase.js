@@ -14,8 +14,7 @@ function RowTableFrase({ frase }) {
   const [fraseSeleccionada, setFraseSeleccionada] = useState(null);
   const [dataForm, setDataForm] = useState({ comentario: '' });
   const { frases, setFrases, isApiConsumer, page } = useContext(FrasesContext);
-  const columnsExpand = ['Id', 'Descripcion de la Frase', 'Calificacion', 'Comentarios'];
-  const [startSelect, setStartSelect] = useState();
+  const columnsExpand = ['Id', 'Descripcion de la Frase', 'Calificacion', 'Promedio', 'Comentarios'];
 
   const closeFoto = () => setOpenFoto(false);
   const closeComentario = () => setOpenComentarios(false);
@@ -25,7 +24,7 @@ function RowTableFrase({ frase }) {
       const fraseSeleccionada = frase;
       for (let i = 0; i < fraseSeleccionada.frases.length; i ++) {
         if (fraseSeleccionada.frases[i].id === id) {
-          fraseSeleccionada.frases[i].calificacion =  calificacion;
+          fraseSeleccionada.frases[i].listaCalificaciones.push(calificacion);
           break;
         }
       }
@@ -37,12 +36,13 @@ function RowTableFrase({ frase }) {
       }
       localStorage.setItem('frases', JSON.stringify(frasesUpdateRaiting));
       setFrases(frasesUpdateRaiting);
+      setExpandTable(false);
       toast.success('Calificación Actualizada Correctamente!!!');
     } else {
       try {
-        const url = `frases/${id}`;
-        const dataCalificacion = { calificacion: calificacion };
-        const { message, data } = await updateCalificacion(url, dataCalificacion, page);
+        const dataCalificacion = { nota: calificacion, frase_id: id };
+        const { message, data } = await updateCalificacion(dataCalificacion, page);
+        setExpandTable(false);
         toast.success(message);
         setFrases(data);
       } catch (error) {
@@ -64,12 +64,13 @@ function RowTableFrase({ frase }) {
       }
       localStorage.setItem('frases', JSON.stringify(frasesWithNewComment));
       setFrases(frasesWithNewComment);  
+      setOpenComentarios(false);
       setDataForm({ comentario: '' });
       toast.success('Comentario Agregado Correctamente!!!');
     } else {
       try {
-        const dataCalificacion = { comentario: values.comentario, frase_id: id };
-        const { message, data } = await addComentario(dataCalificacion, page);
+        const dataComentario = { comentario: values.comentario, frase_id: id };
+        const { message, data } = await addComentario(dataComentario, page);
         setFrases(data);
         setOpenComentarios(false);
         setDataForm({ comentario: '' });
@@ -78,6 +79,20 @@ function RowTableFrase({ frase }) {
         toast.error('Algo inesperado ocurrio aquí');
       }
     }
+  };
+
+  const getPromedioCalificaciones = (calificaciones) => {
+    const sumatoria = calificaciones.reduce((previous, current) => current += previous);
+    const promedio = sumatoria / calificaciones.length;
+    return parseFloat(promedio.toFixed(1));
+  };
+
+  const getCalificacionesByApi = (data) => {
+    if (data.length > 0) {
+      const calificaciones = data.map(item => item.nota);
+      return calificaciones;
+    }
+    return [0];
   };
 
   return (
@@ -151,11 +166,14 @@ function RowTableFrase({ frase }) {
                       <TableCell>{ data.frase }</TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
                         <Rating 
-                          value={data.calificacion}
-                          onChange={(event, value) => updateRaitingFrase(data.id, value, frase.personaje) } 
-                          onChangeActive={(event, value) => {
-                            setStartSelect(value);
-                          }} />
+                          value={getPromedioCalificaciones(data.listaCalificaciones || getCalificacionesByApi(data.notas))}
+                          onChange={(event, value) => updateRaitingFrase(data.id, value, frase.personaje) } />
+                      </TableCell>
+                      <TableCell
+                        sx={{ textAlign: 'center' }}>
+                        {
+                          getPromedioCalificaciones(data.listaCalificaciones || getCalificacionesByApi(data.notas))
+                        }
                       </TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
                         <Button
