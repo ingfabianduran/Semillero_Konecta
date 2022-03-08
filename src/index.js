@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter as Router } from 'react-router-dom';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import { uiReducer } from './store/Ui/reducer';
+import { uiReducer } from 'store/Ui/reducer';
+import { personajesReducer } from 'store/Personajes/reducer';
+import { frasesReducer } from 'store/Frases/reducer';
 
-const store = createStore(uiReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const reducers = combineReducers({
+  uiReducer, 
+  personajesReducer,
+  frasesReducer
+});
+const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
   <Provider

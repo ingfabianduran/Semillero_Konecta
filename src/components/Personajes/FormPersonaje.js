@@ -10,6 +10,7 @@ function FormPersonaje({ searchPersonaje }) {
         sx={{ width: 600, backgroundColor: 'white' }}
         label='Buscar Personaje'
         variant='outlined' 
+        autoComplete='off'
         fullWidth 
         onChange={searchPersonaje}/>
     </Grid>

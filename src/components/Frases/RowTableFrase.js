@@ -6,6 +6,8 @@ import { ComentarioFrase } from 'components/Frases/ComentarioFrase';
 import { FrasesContext } from 'context/FrasesContex';
 import { toast } from 'react-toastify';
 import { updateCalificacion, addComentario } from 'services/MisPersonajes';
+import { setFrases } from 'store/Frases/actions';
+import { useDispatch } from 'react-redux';
 
 function RowTableFrase({ frase }) {
   const [expandTable, setExpandTable] = useState(false);
@@ -14,13 +16,16 @@ function RowTableFrase({ frase }) {
   const [fraseSeleccionada, setFraseSeleccionada] = useState(null);
   const [dataForm, setDataForm] = useState({ comentario: '' });
   const [loading, setLoading] = useState(false);
-  const { frases, setFrases, isApiConsumer, page } = useContext(FrasesContext);
+  const [stateRaiting, setStateRaiting] = useState(false);
+  const { frases, isApiConsumer, page } = useContext(FrasesContext);
   const columnsExpand = ['Id', 'Descripcion de la Frase', 'Calificacion', 'Promedio', 'Comentarios'];
+  const dispatch = useDispatch();
 
   const closeFoto = () => setOpenFoto(false);
   const closeComentario = () => setOpenComentarios(false);
 
   const updateRaitingFrase = async(id, calificacion, personaje) => {
+    setStateRaiting(true);
     if (!isApiConsumer) {
       const fraseSeleccionada = frase;
       for (let i = 0; i < fraseSeleccionada.frases.length; i ++) {
@@ -35,18 +40,23 @@ function RowTableFrase({ frase }) {
           frasesUpdateRaiting[i].frases = fraseSeleccionada.frases;
         }
       }
-      localStorage.setItem('frases', JSON.stringify(frasesUpdateRaiting));
-      setFrases(frasesUpdateRaiting);
-      setExpandTable(false);
-      toast.success('Calificación Actualizada Correctamente!!!');
+      setTimeout(() => {
+        setStateRaiting(false);
+        localStorage.setItem('frases', JSON.stringify(frasesUpdateRaiting));
+        dispatch(setFrases(frasesUpdateRaiting));
+        toast.success('Calificación Actualizada Correctamente!!!');
+      }, 1000);
     } else {
       try {
         const dataCalificacion = { nota: calificacion, frase_id: id };
         const { message, data } = await updateCalificacion(dataCalificacion, page);
-        setExpandTable(false);
-        toast.success(message);
-        setFrases(data);
+        setTimeout(() => {
+          setStateRaiting(false);
+          toast.success(message);
+          dispatch(setFrases(data));
+        }, 1000);
       } catch (error) {
+        setStateRaiting(false);
         toast.error('Algo inesperado ocurrio aquí');
       }
     }
@@ -67,7 +77,7 @@ function RowTableFrase({ frase }) {
       setTimeout(() => {
         setLoading(false);
         localStorage.setItem('frases', JSON.stringify(frasesWithNewComment));
-        setFrases(frasesWithNewComment);  
+        dispatch(setFrases(frasesWithNewComment));  
         setOpenComentarios(false);
         setDataForm({ comentario: '' });
         toast.success('Comentario Agregado Correctamente!!!');
@@ -77,7 +87,7 @@ function RowTableFrase({ frase }) {
         const dataComentario = { comentario: values.comentario, frase_id: id };
         const { message, data } = await addComentario(dataComentario, page);
         setTimeout(() => {
-          setFrases(data);
+          dispatch(setFrases(data));
           setOpenComentarios(false);
           setDataForm({ comentario: '' });
           toast.success(message);
@@ -176,6 +186,7 @@ function RowTableFrase({ frase }) {
                       <TableCell>{ data.frase }</TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
                         <Rating 
+                          disabled={stateRaiting}
                           value={getPromedioCalificaciones(data.listaCalificaciones || getCalificacionesByApi(data.notas))}
                           onChange={(event, value) => updateRaitingFrase(data.id, value, frase.personaje) } />
                       </TableCell>

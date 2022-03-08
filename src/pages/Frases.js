@@ -1,26 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Grid, CircularProgress } from '@mui/material';
 import { TableFrase } from 'components/Frases/TableFrase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from 'store/Ui/actions';
+import { setFrases } from 'store/Frases/actions';
 import { FrasesContext } from 'context/FrasesContex';
 import { addCommentsAndRaiting } from 'services/Frases';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
 
 function Frases() {
-  const [frases, setFrases] = useState([]);
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.loading);
+  const loading = useSelector(state => state.uiReducer.loading);
+  const frases = useSelector(state => state.frasesReducer.frases);
 
   const loadData = async() => {
     try {
       dispatch(setLoading(true));
       if (localStorage.getItem('frases')) {
-        setFrases(JSON.parse(localStorage.getItem('frases')));
+        dispatch(setFrases(JSON.parse(localStorage.getItem('frases'))));
       } else {
         const getFrases = await addCommentsAndRaiting();
-        setFrases(getFrases);
+        dispatch(setFrases(getFrases));
         localStorage.setItem('frases', JSON.stringify(getFrases));
       }
       setTimeout(() => {
@@ -38,7 +39,7 @@ function Frases() {
 
   return (
     <FrasesContext.Provider
-      value={{ frases, setFrases }}>
+      value={{ frases }}>
       <Helmet>
         <title>Frases | Breaking Bad API</title>
       </Helmet>

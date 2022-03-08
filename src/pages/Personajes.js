@@ -3,6 +3,7 @@ import { getData as apiGetPersonajes } from 'api/api';
 import { Grid, CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from 'store/Ui/actions';
+import { setPersonajes } from 'store/Personajes/actions';
 import { PaginationPersonaje } from 'components/Personajes/PaginationPersonaje';
 import { FormPersonaje } from 'components/Personajes/FormPersonaje';
 import { ListPersonaje } from 'components/Personajes/ListPersonaje';
@@ -12,10 +13,10 @@ import { Helmet } from 'react-helmet';
 function Personajes() {
   const dispatch = useDispatch();
   const [busquedaPersonaje, setBusquedaPersonaje] = useState('');
-  const [personajes, setPersonajes] = useState([]);
   const [numPages, setNumPages] = useState(1);
   const [page, setPage] = useState(1);
-  const loading = useSelector(state => state.loading);
+  const loading = useSelector(state => state.uiReducer.loading);
+  const personajes = useSelector(state => state.personajesReducer.personajes);
 
   const changePage = (event, value) => setPage(value);
 
@@ -26,7 +27,7 @@ function Personajes() {
       const dataForNumPages = await apiGetPersonajes(urlForPages);
       const totalPersonajes = dataForNumPages.length;
       const pages = Math.ceil(totalPersonajes / 5);
-      setPersonajes(dataPersonajes);
+      dispatch(setPersonajes(dataPersonajes));
       setNumPages(pages);
       setTimeout(() => {
         dispatch(setLoading(false));

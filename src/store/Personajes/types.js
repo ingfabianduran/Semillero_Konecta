@@ -1,0 +1,3 @@
+const SET_PERSONAJES = 'SET_PERSONAJES';
+
+export { SET_PERSONAJES };

@@ -9,9 +9,9 @@ import { getMisPersonajes, addPersonaje } from 'services/MisPersonajes';
 import { ModalPersonaje } from 'components/Personajes/ModalPersonaje';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
+import { setFrases } from 'store/Frases/actions';
 
 function MisPersonajes() {
-  const [frases, setFrases] = useState([]);
   const [numPages, setNumPages] = useState(1);
   const [page, setPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
@@ -24,7 +24,8 @@ function MisPersonajes() {
   });
 
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.loading);
+  const loading = useSelector(state => state.uiReducer.loading);
+  const frases = useSelector(state => state.frasesReducer.frases);
   const isApiConsumer = true;
 
   const changePage = (event, value) => setPage(value);
@@ -35,7 +36,7 @@ function MisPersonajes() {
       dispatch(setLoading(true));
       const url = `personajes/all?page=${page}`;
       const { data, current_page, last_page } = await getMisPersonajes(url);
-      setFrases(data);
+      dispatch(setFrases(data));
       setNumPages(last_page);
       setPage(current_page);
       setTimeout(() => {
